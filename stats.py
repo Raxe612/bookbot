@@ -12,17 +12,31 @@ def number_of_words(text):
         word_counter += 1
     print(f"Found {word_counter} total words")
 
+
+def sort_on(item):
+    return item["num"]
+
 def count_characters(file_path):
     with open(file_path) as f:
         text = f.read()
-        character_count = {}
+        unsorted_characters = {}
+        unsorted_list = []
+        sorted_list = []
+
         for character in text:
-            lower_character = character.lower()
-            if lower_character not in character_count:
-                character_count[lower_character] = 1
-            else: 
-                character_count[lower_character] += 1
-    sorted_list = []
-    sorted_list = sorted(character_count.items(), key=lambda pair: pair[1], reverse=True)
-    character_count = dict(sorted_list)
-    return character_count
+            if character.isalpha():
+                character = character.lower()
+                if character not in unsorted_characters:
+                    unsorted_characters[character] = 1
+                else: 
+                    unsorted_characters[character] += 1
+        
+        for key, value in unsorted_characters.items():
+            unsorted_list.append({"char": key, "num": value}) 
+        
+        unsorted_list.sort(reverse=True, key=sort_on)
+        sorted_list = unsorted_list
+        
+    return sorted_list   
+
+    
